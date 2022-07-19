@@ -9,6 +9,8 @@ end
 
 require "hrr_rb_ssh"
 
+$stderr.puts "debug: OpenSSLRubyVersion=#{OpenSSL::VERSION} OpenSSLVersionNumber=#{OpenSSL::OPENSSL_VERSION} OpenSSLLibraryVersion#{OpenSSL::OPENSSL_LIBRARY_VERSION}"
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
