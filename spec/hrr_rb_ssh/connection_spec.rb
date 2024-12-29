@@ -574,11 +574,19 @@ RSpec.describe HrrRbSsh::Connection do
         HrrRbSsh::Messages::SSH_MSG_CHANNEL_OPEN.new.encode channel_open_message
       }
       let(:channel_open_failure_message){
+        expected_description = if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.4.0')
+          "undefined method 'new' for nil"
+        elsif Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.3.0')
+          "undefined method `new' for nil"
+        else
+          "undefined method `new' for nil:NilClass"
+        end
+
         {
           :'message number'      => HrrRbSsh::Messages::SSH_MSG_CHANNEL_OPEN_FAILURE::VALUE,
           :'recipient channel'   => 0,
           :'reason code'         => HrrRbSsh::Messages::SSH_MSG_CHANNEL_OPEN_FAILURE::ReasonCode::SSH_OPEN_CONNECT_FAILED,
-          :'description'         => Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.3.0') ? "undefined method `new' for nil" : "undefined method `new' for nil:NilClass",
+          :'description'         => expected_description,
           :'language tag'        => "",
         }
       }
